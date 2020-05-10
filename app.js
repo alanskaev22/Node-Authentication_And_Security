@@ -2,6 +2,7 @@ const express = require("express");
 const bodyParser = require("body-parser");
 const ejs = require("ejs");
 const mongoose = require("mongoose");
+const encrypt = require("mongoose-encryption");
 
 const app = express();
 
@@ -14,13 +15,19 @@ app.set("view engine", "ejs");
 mongoose.connect("mongodb://localhost:27017/secretsDB", {useNewUrlParser: true, useUnifiedTopology: true});
 mongoose.connection.on("connected", () => console.log(`Connected to: ${mongoose.connection.name}`));
 mongoose.connection.on("error", (err) => console.error("Connection failed with - ", err));
+
 const Schema = mongoose.Schema;
-const userSchema = {
+const userSchema = new Schema({
     email: String,
     password: String
-}
+});
+
+const secret = "ThisIsSecret";
+userSchema.plugin(encrypt, {secret: secret, encryptedFields: ["password"]});
+
 const User = mongoose.model("User", userSchema);
 
+// === HTTP Methods ===
 app.get("/", (req, res) => {
     res.render("home");
 
