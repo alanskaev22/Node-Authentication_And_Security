@@ -105,3 +105,6 @@ hs_err_pid*
 
 #Node
 /node_modules/
+
+/.idea/*
+*/jsLibraryMappings.xml
