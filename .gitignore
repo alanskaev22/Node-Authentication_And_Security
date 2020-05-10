@@ -108,4 +108,4 @@ hs_err_pid*
 
 /.idea/*
 */jsLibraryMappings.xml
-*/.env
+.env
