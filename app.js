@@ -13,7 +13,7 @@ app.use(express.static("public"));
 app.set("view engine", "ejs");
 
 // === Mongoose setup ===
-mongoose.connect("mongodb://localhost:27017/secretsDB", {useNewUrlParser: true, useUnifiedTopology: true});
+mongoose.connect(process.env.MONGODB, {useNewUrlParser: true, useUnifiedTopology: true});
 mongoose.connection.on("connected", () => console.log(`Connected to: ${mongoose.connection.name}`));
 mongoose.connection.on("error", (err) => console.error("Connection failed with - ", err));
 
@@ -83,6 +83,6 @@ app.get("/secrets", (req, res) => {
 
 });
 
-app.listen(3000, () => {
-    console.log("Server running on port 3000")
+app.listen(process.env.PORT, () => {
+    console.log(`Server running on port ${process.env.PORT}`)
 });
